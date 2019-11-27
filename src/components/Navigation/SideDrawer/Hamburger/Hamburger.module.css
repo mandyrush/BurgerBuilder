@@ -16,3 +16,9 @@
     background-color: white;
     border-radius: 5px;
 }
+
+@media (min-width: 500px) {
+    .Hamburger {
+        display: none;
+    }
+}
