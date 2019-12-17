@@ -11,7 +11,7 @@ const sideDrawer = (props) => {
 
     if(props.open) {
         attachedClasses = [classes.SideDrawer, classes.Open];
-    }
+    };
 
     return (
         <Aux>
@@ -21,7 +21,7 @@ const sideDrawer = (props) => {
                     <Logo />
                 </div>
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems isAuth={props.isAuth} />
                 </nav>
             </div>
         </Aux>

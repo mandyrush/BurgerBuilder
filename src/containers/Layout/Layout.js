@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Aux';
 import classes from './Layout.module.css';
@@ -13,26 +14,37 @@ class Layout extends Component {
     closeSideDrawerHandler = () => {
         this.setState({
             showSideDrawer: false
-        })
-    }
+        });
+    };
 
     toggleHamburgerHandler = () => {
         this.setState((prevState) => {
             return {showSideDrawer: !prevState.showSideDrawer};
-        })
-    }
+        });
+    };
 
     render() {
         return (
             <Aux>
-                <Toolbar toggleHamburger={this.toggleHamburgerHandler} />
-                <SideDrawer open={this.state.showSideDrawer} close={this.closeSideDrawerHandler} />
+                <Toolbar 
+                    toggleHamburger={this.toggleHamburgerHandler} 
+                    isAuth={this.props.isAuth} />
+                <SideDrawer 
+                    open={this.state.showSideDrawer} 
+                    close={this.closeSideDrawerHandler} 
+                    isAuth={this.props.isAuth} />
                 <main className={classes.Content}>
                     {this.props.children}
                 </main>
             </Aux>
         );
-    }
-} 
+    };
+}; 
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.token !== null
+    };
+};
+
+export default connect(mapStateToProps)(Layout);

@@ -8,7 +8,7 @@ class Modal extends Component {
 
     shouldComponentUpdate( nextProps, nextState ) {
         return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
-    }
+    };
 
     render() {
         return (
@@ -24,7 +24,7 @@ class Modal extends Component {
                 </div>
             </Aux>  
         );
-    }
-}
+    };
+};
 
 export default Modal;

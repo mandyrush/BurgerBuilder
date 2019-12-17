@@ -103,18 +103,18 @@ class ContactData extends Component {
 
         if(rules.required) {
             isValid= value.trim() !== '' && isValid;
-        }
+        };
 
         if(rules.minLength) {
             isValid = value.length >= rules.minLength && isValid;
-        }
+        };
 
         if(rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid;
-        }
+        };
 
         return isValid;
-    }
+    };
 
     submitOrderHandler = (event) => {
         event.preventDefault();
@@ -124,7 +124,7 @@ class ContactData extends Component {
 
         for(let formElementIdentifier in this.state.orderForm) {
             orderDetails[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
-        }
+        };
 
         const order = {
             ingredients: this.props.ingredients,
@@ -132,15 +132,15 @@ class ContactData extends Component {
             orderDetails: orderDetails
         };
 
-        this.props.onPurchaseBurger(order);
-    }
+        this.props.onPurchaseBurger(order, this.props.token);
+    };
 
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {...this.state.orderForm};
         const updatedElement = {...updatedOrderForm[inputIdentifier]};
         
         updatedElement.value = event.target.value;
-        updatedElement.valid = this.checkValidationHandler(updatedElement.validation, updatedElement.value)
+        updatedElement.valid = this.checkValidationHandler(updatedElement.validation, updatedElement.value);
         
         updatedElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedElement;
@@ -148,10 +148,10 @@ class ContactData extends Component {
         let formIsValid = true;
         for(let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-        }
+        };
 
         this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
-    }
+    };
 
     render() {
         let formArray = [];
@@ -160,8 +160,8 @@ class ContactData extends Component {
             formArray.push({
                 id: key,
                 config: this.state.orderForm[key]
-            })
-        }
+            });
+        };
 
         let form = (
             <form onSubmit={this.submitOrderHandler}>
@@ -183,29 +183,30 @@ class ContactData extends Component {
         );
 
         if(this.props.loading) {
-            form = (<Spinner />)
-        }
+            form = (<Spinner />);
+        };
         return (
             <div className={classes.ContactData}>
                 <h2>Please Enter your information.</h2>
                 {form}
             </div>
         );
-    }
+    };
 };
 
 const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     };
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
-        onPurchaseBurger: (orderData) => dispatch (actions.purchaseBurger(orderData))
-    }
-}
+        onPurchaseBurger: (orderData, token) => dispatch (actions.purchaseBurger(orderData, token))
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

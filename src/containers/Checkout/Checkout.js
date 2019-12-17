@@ -8,14 +8,14 @@ import ContactData from '../Checkout/ContactData/ContactData';
 class Checkout extends Component {
     cancelOrderHandler = () => {
         this.props.history.goBack();
-    }
+    };
 
     continueOrderHandler = () => {
         this.props.history.push('/checkout/orderData');
-    }
+    };
 
     render() {
-        let summary = <Redirect to='/' />
+        let summary = <Redirect to='/' />;
 
         if(this.props.ingredients) {
             const purchasedRedirect = this.props.purchased ? <Redirect to='/' /> : null;
@@ -31,9 +31,9 @@ class Checkout extends Component {
                         component={ContactData} /> 
                 </div>
             );
-        }
+        };
         return summary;
-    }
+    };
 };
 
 const mapStateToProps = state => {
@@ -42,6 +42,6 @@ const mapStateToProps = state => {
         price: state.burgerBuilder.totalPrice,
         purchased: state.order.purchased
     };
-}
+};
 
 export default connect(mapStateToProps)(Checkout);

@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    error: false
+    error: false,
+    building: false
 };
 
 const INGREDIENT_PRICES = {
@@ -11,7 +12,7 @@ const INGREDIENT_PRICES = {
     cheese: 0.4,
     meat: 1.3,
     bacon: 0.7
-}
+};
 
 const addIngredient = (state, action) => {
     return {
@@ -20,9 +21,10 @@ const addIngredient = (state, action) => {
             ...state.ingredients,
             [action.ingredientName]: state.ingredients[action.ingredientName] + 1
         },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
     };
-}
+};
 
 const removeIngredient = (state, action) => {
     return {
@@ -31,25 +33,27 @@ const removeIngredient = (state, action) => {
             ...state.ingredients,
             [action.ingredientName]: state.ingredients[action.ingredientName] - 1
         },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        building: true
     };
-}
+};
 
 const setIngredients = (state, action) => {
     return {
         ...state,
         ingredients: action.ingredients,
         error: false,
-        totalPrice: 4
+        totalPrice: 4,
+        building: false
     };
-}
+};
 
 const fetchIngredientsFailed = (state, action) => {
     return {
         ...state,
         error: true
-    }
-}
+    };
+};
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
@@ -58,7 +62,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_INGREDIENTS: return setIngredients(state, action);
         case actionTypes.FETCH_INGREDIENTS_FAILED: return fetchIngredientsFailed(state, action);
         default: return state;
-    }
-}
+    };
+};
 
 export default reducer;

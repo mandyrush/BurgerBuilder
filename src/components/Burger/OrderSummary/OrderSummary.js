@@ -10,7 +10,7 @@ class OrderSummary extends Component {
             return <li key={igKey}>
                 <span style={{textTransform: 'capitalize'}}>{igKey}</span>: {this.props.ingredients[igKey]}
             </li>
-        })
+        });
 
         return (
             <Aux>
@@ -25,7 +25,7 @@ class OrderSummary extends Component {
                 <Button btnType="Success" clicked={this.props.purchaseContinue} >CONTINUE</Button>
             </Aux>
         );
-    }
-}
+    };
+};
 
 export default OrderSummary;
